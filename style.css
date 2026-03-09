@@ -26,7 +26,6 @@ html, body {
   color:var(--text);
   font-size:14px;
   -webkit-tap-highlight-color: transparent;
-  touch-action: manipulation;
 }
 
 /* ── SPLASH ────────────────────────────────────────────── */
