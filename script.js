@@ -151,14 +151,21 @@ function resetIdleTimer() {
 
 // ── Load hasc.glb automatically ─────────────────────────────────────────────
 function initGLTFLoader(callback) {
-  const s = document.createElement('script');
-  s.src = 'https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js';
-  s.onload = callback;
-  s.onerror = () => {
+  // Load GLTFLoader first, then DRACOLoader (needed for compressed .glb files)
+  const s1 = document.createElement('script');
+  s1.src = 'https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js';
+  s1.onerror = () => {
     showToast('Could not load 3D engine. Check your internet connection.');
     document.getElementById('statusText').textContent = 'Failed to load viewer engine';
   };
-  document.head.appendChild(s);
+  s1.onload = () => {
+    const s2 = document.createElement('script');
+    s2.src = 'https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/DRACOLoader.js';
+    s2.onerror = () => callback(); // fallback without draco
+    s2.onload = callback;
+    document.head.appendChild(s2);
+  };
+  document.head.appendChild(s1);
 }
 
 function placeModel(gltf) {
@@ -206,6 +213,15 @@ function autoLoadModel() {
   initGLTFLoader(() => {
     updateLoaderProgress(50);
     const loader = new THREE.GLTFLoader();
+
+    // Attach DRACOLoader if available — required for Roblox compressed exports
+    if (THREE.DRACOLoader) {
+      const draco = new THREE.DRACOLoader();
+      // Use Google's hosted Draco decoder (no extra files needed)
+      draco.setDecoderPath('https://www.gstatic.com/draco/versioned/decoders/1.5.6/');
+      draco.setDecoderConfig({ type: 'js' });
+      loader.setDRACOLoader(draco);
+    }
 
     loader.load(
       'hasc.glb',
