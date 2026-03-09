@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
   <meta name="mobile-web-app-capable" content="yes"/>
   <meta name="apple-mobile-web-app-capable" content="yes"/>
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
   <title>HASC — 3D Campus Viewer</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
@@ -14,7 +13,7 @@
 </head>
 <body>
 
-  <!-- Splash Screen -->
+  <!-- Splash -->
   <div id="splash" class="splash">
     <div class="splash-inner">
       <div class="logo-ring">
@@ -32,15 +31,13 @@
     </div>
   </div>
 
-  <!-- Sidebar overlay (mobile) -->
+  <!-- Sidebar overlay -->
   <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
 
   <div class="shell">
 
     <!-- Sidebar -->
     <aside class="sidebar" id="sidebar">
-
-      <!-- Mobile sidebar header -->
       <div class="sidebar-header">
         <div class="sidebar-brand">
           <div class="brand-icon">⛪</div>
@@ -49,11 +46,10 @@
             <div class="brand-sub">Campus Viewer</div>
           </div>
         </div>
-        <button class="sidebar-close" onclick="closeSidebar()" aria-label="Close panel">✕</button>
+        <button class="sidebar-close" onclick="closeSidebar()">✕</button>
       </div>
 
       <div class="sidebar-scroll">
-
         <div class="sidebar-section">
           <div class="section-label">Scene</div>
           <div class="control-group">
@@ -61,7 +57,6 @@
             <select class="select-input" id="envSelect">
               <option value="neutral">Neutral Studio</option>
               <option value="legacy">Legacy</option>
-              <option value="commerce">Commerce</option>
               <option value="apartment">Apartment</option>
               <option value="city">City</option>
               <option value="dawn">Dawn</option>
@@ -75,29 +70,20 @@
             </select>
           </div>
           <div class="control-group">
-            <label class="control-label">Exposure</label>
-            <div class="slider-row">
-              <input type="range" class="slider" id="exposureSlider" min="0.1" max="3" step="0.05" value="1">
-              <span class="slider-val" id="exposureVal">1.0</span>
-            </div>
+            <label class="control-label">Exposure <span class="slider-val" id="exposureVal">1.0</span></label>
+            <input type="range" class="slider" id="exposureSlider" min="0.1" max="3" step="0.05" value="1">
           </div>
           <div class="control-group">
-            <label class="control-label">Shadow Intensity</label>
-            <div class="slider-row">
-              <input type="range" class="slider" id="shadowSlider" min="0" max="2" step="0.05" value="1">
-              <span class="slider-val" id="shadowVal">1.0</span>
-            </div>
+            <label class="control-label">Shadow <span class="slider-val" id="shadowVal">1.0</span></label>
+            <input type="range" class="slider" id="shadowSlider" min="0" max="2" step="0.05" value="1">
           </div>
         </div>
 
         <div class="sidebar-section">
           <div class="section-label">Camera</div>
           <div class="control-group">
-            <label class="control-label">Field of View</label>
-            <div class="slider-row">
-              <input type="range" class="slider" id="fovSlider" min="10" max="120" step="1" value="45">
-              <span class="slider-val" id="fovVal">45°</span>
-            </div>
+            <label class="control-label">Field of View <span class="slider-val" id="fovVal">45°</span></label>
+            <input type="range" class="slider" id="fovSlider" min="10" max="120" step="1" value="45">
           </div>
           <div class="toggle-row">
             <span class="toggle-label">Auto-Rotate</span>
@@ -105,13 +91,6 @@
               <input type="checkbox" id="autoRotateToggle">
               <span class="toggle-track"><span class="toggle-thumb"></span></span>
             </label>
-          </div>
-          <div class="control-group dimmed" id="rotateSpeedGroup">
-            <label class="control-label">Rotate Speed</label>
-            <div class="slider-row">
-              <input type="range" class="slider" id="rotateSpeedSlider" min="1" max="60" step="1" value="30">
-              <span class="slider-val" id="rotateSpeedVal">30s</span>
-            </div>
           </div>
           <button class="btn-outline" onclick="resetCamera()">↺ Reset Camera</button>
         </div>
@@ -145,16 +124,14 @@
 
         <div class="sidebar-section">
           <button class="btn-primary" onclick="toggleFullscreen()">⛶ &nbsp;Fullscreen</button>
-          <button class="btn-outline" onclick="launchAR()">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="vertical-align:middle;margin-right:4px;"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          <button class="btn-outline" onclick="launchAR()" style="margin-top:8px;">
             View in AR
           </button>
         </div>
-
       </div>
     </aside>
 
-    <!-- Main viewer -->
+    <!-- Viewer -->
     <main class="viewer-wrap">
 
       <!-- Top bar -->
@@ -163,44 +140,48 @@
           <span></span><span></span><span></span>
         </button>
         <div class="top-title">
-          <span class="top-school">Holy Angel School of Caloocan, Inc.</span>
-          <span class="top-sub">3D Campus Model</span>
+          <div class="top-school">Holy Angel School of Caloocan, Inc.</div>
+          <div class="top-sub">3D Campus Model</div>
         </div>
-        <button class="icon-btn top-ar-btn" onclick="launchAR()" title="View in AR">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
-        </button>
+        <button class="icon-btn" onclick="launchAR()">AR</button>
       </div>
 
-      <!-- model-viewer -->
+      <!-- THE model-viewer — touch-action MUST be none, no extra wrappers -->
       <model-viewer
         id="mv"
         src="hasc.glb"
         alt="HASC 3D Campus Model"
+        camera-controls
         shadow-intensity="1"
         environment-image="neutral"
         exposure="1"
-        camera-controls
-        touch-action="none"
         interaction-prompt="none"
-        style="width:100%;height:100%;background:transparent;"
+        style="
+          display: block;
+          position: absolute;
+          top: 0; left: 0;
+          width: 100%;
+          height: 100%;
+          background: transparent;
+          touch-action: none;
+          --poster-color: transparent;
+        "
       >
         <div slot="progress-bar" style="display:none;"></div>
-        <button slot="ar-button" id="arNativeBtn" style="opacity:0;position:absolute;pointer-events:none;">AR</button>
+        <button slot="ar-button" style="display:none;">AR</button>
       </model-viewer>
 
-      <!-- Grid -->
+      <!-- Grid overlay — pointer-events none so it never intercepts touches -->
       <canvas id="gridCanvas" class="grid-canvas"></canvas>
 
-      <!-- Hints — desktop vs mobile via CSS -->
-      <div class="bottom-hints desktop-hints">
-        <span class="hint-chip">🖱 Drag to orbit</span>
-        <span class="hint-chip">⚲ Scroll to zoom</span>
-        <span class="hint-chip">Right-click to pan</span>
-      </div>
-      <div class="bottom-hints mobile-hints">
-        <span class="hint-chip">👆 Drag to orbit</span>
-        <span class="hint-chip">🤏 Pinch to zoom</span>
-        <span class="hint-chip">2 fingers to pan</span>
+      <!-- Hints -->
+      <div class="bottom-hints" id="hintsBar">
+        <span class="hint-chip desktop-only">🖱 Drag to orbit</span>
+        <span class="hint-chip desktop-only">Scroll to zoom</span>
+        <span class="hint-chip desktop-only">Right-click to pan</span>
+        <span class="hint-chip mobile-only">👆 Drag to orbit</span>
+        <span class="hint-chip mobile-only">🤏 Pinch to zoom</span>
+        <span class="hint-chip mobile-only">✌ Two fingers pan</span>
       </div>
 
     </main>
