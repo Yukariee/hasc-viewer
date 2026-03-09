@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>3D Campus Model — Holy Angel School of Caloocan, Inc.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- Loading Screen -->
+<div id="loader">
+  <div class="loader-crest"></div>
+  <div class="loader-text">
+    <div class="loader-school">Holy Angel School<br>of Caloocan, Inc.</div>
+    <div class="loader-sub">3D Campus Viewer</div>
+  </div>
+  <div style="display:flex; flex-direction:column; align-items:center; gap:8px;">
+    <div class="loader-bar-wrap"><div class="loader-bar" id="loaderBar"></div></div>
+    <div class="loader-percent" id="loaderPercent">Loading…</div>
+  </div>
+</div>
+
+<!-- Main Viewer -->
+<div id="viewer-wrap">
+  <canvas id="three-canvas"></canvas>
+
+  <!-- Model loads automatically from hasc.glb -->
+
+  <!-- Top bar -->
+  <div class="top-bar">
+    <div class="school-wordmark">
+      <div class="wordmark-label">Campus Navigator</div>
+      <div class="wordmark-name">Holy Angel School of Caloocan, Inc.</div>
+    </div>
+    <div class="top-bar-right">
+      <button class="pill-btn" id="autoRotateBtn" onclick="toggleAutoRotate()">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21.5 2v6h-6"/><path d="M21.34 15.57a10 10 0 1 1-.57-8.38"/></svg>
+        Auto-Rotate
+      </button>
+      <button class="pill-btn" id="resetBtn" onclick="resetCamera()" title="Reset view">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
+        Reset View
+      </button>
+      <button class="pill-btn" id="fullscreenBtn" onclick="toggleFullscreen()">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" id="fsIcon"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
+        Fullscreen
+      </button>
+    </div>
+  </div>
+
+  <!-- Bottom bar -->
+  <div class="bottom-bar">
+    <div class="hint-stack">
+      <div class="hint"><span class="hint-key">Drag</span> Orbit around</div>
+      <div class="hint"><span class="hint-key">Scroll</span> Zoom in / out</div>
+      <div class="hint"><span class="hint-key">Right-drag</span> Pan</div>
+    </div>
+    <div class="status-pill">
+      <div class="status-dot"></div>
+      <span id="statusText">Loading campus model…</span>
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<!-- Three.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<!-- Our code -->
+<script src="script.js"></script>
+
+</body>
+</html>
